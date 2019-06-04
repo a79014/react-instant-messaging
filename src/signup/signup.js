@@ -36,8 +36,9 @@ class SignupComponent extends React.Component {
           </Typography>
           <form onSubmit={e => this.submitSignup(e)} className={classes.form}>
             <FormControl required fullWidth margin="normal">
-              <InputLabel htmlFor="signup-email-input" />
-              Enter your email
+              <InputLabel htmlFor="signup-email-input">
+                Enter your email
+              </InputLabel>
               <Input
                 onChange={e => this.userTyping("email", e)}
                 autoComplete="email"
