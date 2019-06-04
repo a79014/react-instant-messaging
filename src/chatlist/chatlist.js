@@ -13,7 +13,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import NotificationImportant from "@material-ui/icons/NotificationImportant";
 
 class ChatListComponent extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <div>Hello from chatlist</div>
