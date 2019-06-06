@@ -11,20 +11,20 @@ const styles = theme => ({
     position: "absolute"
   },
 
-  userSent: {
+  friendSent: {
     float: "left",
     clear: "both",
     padding: "20px",
     boxSizing: "border-box",
     wordWrap: "break-word",
     marginTop: "10px",
-    backgroundColor: "#707BC4",
+    backgroundColor: "#8eb9ff",
     color: "white",
     width: "300px",
     borderRadius: "10px"
   },
 
-  friendSent: {
+  userSent: {
     float: "right",
     clear: "both",
     padding: "20px",
