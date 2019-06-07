@@ -12,7 +12,7 @@ class ChatTextBoxComponent extends React.Component {
   };
 
   userClickedInput = () => {
-    console.log("user clicked new chat box");
+    return this.props.messageReadFn();
   };
 
   validateMessage = txt => {

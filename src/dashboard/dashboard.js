@@ -43,15 +43,40 @@ class DashboardComponent extends React.Component {
     this.setState({ newChatFormVisible: true, selectedChat: null });
   };
 
-  selectChat = chatIndex => {
+  selectChat = async chatIndex => {
     console.log("index: ", chatIndex);
-    this.setState({ selectedChat: chatIndex });
+    await this.setState({ selectedChat: chatIndex });
+    this.messageRead();
   };
 
   buildDocKey = friend => {
     return [this.state.email, friend].sort().join(":");
   };
 
+  messageRead = () => {
+    const docKey = this.buildDocKey(
+      this.state.chats[this.state.selectedChat].users.filter(
+        _usr => _usr !== this.state.email
+      )[0]
+    );
+    if (this.clickedChatWhereNotSender(this.state.selectedChat)) {
+      firebase
+        .firestore()
+        .collection("chats")
+        .doc(docKey)
+        .update({ receiverHasRead: true });
+    } else {
+      console.log("clicked message where the user was the sender");
+    }
+  };
+
+  clickedChatWhereNotSender = chatIndex => {
+    return (
+      this.state.chats[chatIndex].messages[
+        this.state.chats[chatIndex].messages.length - 1
+      ].sender !== this.state.email
+    );
+  };
   sendMessage = message => {
     const key = this.buildDocKey(
       this.state.chats[this.state.selectedChat].users.filter(
@@ -93,7 +118,10 @@ class DashboardComponent extends React.Component {
           />
         )}
         {this.state.selectedChat !== null && !this.state.newChatFormVisible ? (
-          <ChatTextBoxComponent sendMessageFn={this.sendMessage} />
+          <ChatTextBoxComponent
+            messageReadFn={this.messageRead}
+            sendMessageFn={this.sendMessage}
+          />
         ) : null}
         <Button onClick={this.signOut} className={classes.signOutBtn}>
           Sign out

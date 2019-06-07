@@ -26,6 +26,12 @@ class ChatListComponent extends React.Component {
     this.props.selectChatFn(index);
   }
 
+  userIsSender = chat => {
+    return (
+      chat.messages[chat.messages.length - 1].sender === this.props.userEmail
+    );
+  };
+
   render() {
     const { classes } = this.props;
     if (this.props.chats.length > 0) {
@@ -75,6 +81,14 @@ class ChatListComponent extends React.Component {
                         </React.Fragment>
                       }
                     />
+                    {_chat.receiverHasRead === false &&
+                    !this.userIsSender(_chat) ? (
+                      <ListItemIcon>
+                        <NotificationImportant
+                          className={classes.unreadMessage}
+                        />
+                      </ListItemIcon>
+                    ) : null}
                   </ListItem>
                   <Divider />
                 </div>
